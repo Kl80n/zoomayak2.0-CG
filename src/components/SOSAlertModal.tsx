@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Radio
@@ -24,6 +24,15 @@ export const SOSAlertModal: React.FC<SOSAlertModalProps> = ({
   const [reward, setReward] = useState('25 000 ₽');
   const [phone, setPhone] = useState('+7 (999) 450-88-21');
   const [description, setDescription] = useState('Убежал во время вечерней прогулки, испугался салюта. На нем ошейник с QR ЗооМаяк.');
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -61,16 +70,19 @@ export const SOSAlertModal: React.FC<SOSAlertModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
       <div 
-        className="relative w-full max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-rose-500/40 rounded-3xl shadow-2xl overflow-hidden my-6 animate-in zoom-in-95 text-left"
+        className="relative w-full max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-rose-500/40 rounded-3xl shadow-2xl overflow-hidden my-6 animate-in zoom-in-95 text-left cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header */}
         <div className="bg-gradient-to-r from-rose-50 via-red-50/50 to-orange-50 dark:from-rose-950 dark:via-slate-900 dark:to-red-950 px-6 py-4 border-b border-rose-200 dark:border-rose-500/30 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white shadow-md animate-pulse">
+            <div className="w-14 h-14 rounded-xl bg-rose-600 flex items-center justify-center text-white shadow-md animate-pulse">
               <Radio className="w-5 h-5" />
             </div>
             <div>

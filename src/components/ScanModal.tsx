@@ -32,6 +32,15 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
     if (videoRef.current) videoRef.current.srcObject = null;
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   const findPetFromQr = useCallback((raw: string) => {
     const value = raw.trim();
     const normalized = value.toLowerCase();
@@ -172,8 +181,14 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden my-1 sm:my-6 text-left">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden my-1 sm:my-6 text-left cursor-default"
+        onClick={e => e.stopPropagation()}
+      >
         <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-cyan-50 dark:from-teal-950 dark:via-slate-900 dark:to-cyan-950 px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-teal-500/20 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-teal-500 flex items-center justify-center text-white shadow-md">
@@ -184,7 +199,7 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
               <p className="text-[10px] sm:text-xs text-teal-700 dark:text-teal-300 font-medium truncate">Наведите камеру на QR-адресник</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-950 dark:hover:text-rose-400 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shrink-0" aria-label="Закрыть">
+          <button onClick={onClose} className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-950 dark:hover:text-rose-400 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shrink-0 cursor-pointer" aria-label="Закрыть">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -195,12 +210,14 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
               <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" muted playsInline autoPlay />
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-black/40" />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[min(72vw,260px)] aspect-square border-2 border-teal-300/80 rounded-2xl shadow-[0_0_0_999px_rgba(0,0,0,.28)] relative">
-                  <span className="absolute -top-1 -left-1 w-7 h-7 border-t-4 border-l-4 border-teal-300 rounded-tl-xl" />
-                  <span className="absolute -top-1 -right-1 w-7 h-7 border-t-4 border-r-4 border-teal-300 rounded-tr-xl" />
-                  <span className="absolute -bottom-1 -left-1 w-7 h-7 border-b-4 border-l-4 border-teal-300 rounded-bl-xl" />
-                  <span className="absolute -bottom-1 -right-1 w-7 h-7 border-b-4 border-r-4 border-teal-300 rounded-br-xl" />
-                  <div className="absolute left-3 right-3 top-1/2 h-0.5 bg-teal-300 shadow-[0_0_14px_rgba(45,212,191,.9)] animate-pulse" />
+                <div className="w-[min(72vw,260px)] aspect-square border-2 border-teal-300/80 rounded-2xl shadow-[0_0_0_999px_rgba(0,0,0,.32)] relative overflow-hidden">
+                  <span className="absolute -top-1 -left-1 w-7 h-7 border-t-4 border-l-4 border-teal-300 rounded-tl-xl z-20" />
+                  <span className="absolute -top-1 -right-1 w-7 h-7 border-t-4 border-r-4 border-teal-300 rounded-tr-xl z-20" />
+                  <span className="absolute -bottom-1 -left-1 w-7 h-7 border-b-4 border-l-4 border-teal-300 rounded-bl-xl z-20" />
+                  <span className="absolute -bottom-1 -right-1 w-7 h-7 border-b-4 border-r-4 border-teal-300 rounded-br-xl z-20" />
+                  
+                  {/* Active Moving Laser Scan Beam */}
+                  <div className="scanner-laser-beam" />
                 </div>
               </div>
               <div className="absolute top-3 right-3 flex items-center gap-2">

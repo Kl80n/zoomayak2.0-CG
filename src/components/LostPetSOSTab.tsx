@@ -114,7 +114,7 @@ export const LostPetSOSTab: React.FC<LostPetSOSTabProps> = ({
                 onClick={() => handlePrintPoster(alert)}
               >
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full ring-2 ring-rose-500 overflow-hidden shadow-xl group-hover:scale-125 transition-transform bg-white dark:bg-slate-900">
+                  <div className="w-14 h-14 rounded-full ring-2 ring-rose-500 overflow-hidden shadow-xl group-hover:scale-125 transition-transform bg-white dark:bg-slate-900">
                     <img src={alert.photoUrl} alt={alert.petName} className="w-full h-full object-cover" />
                   </div>
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-600 rounded-full text-[9px] font-black text-white flex items-center justify-center animate-bounce">
@@ -271,7 +271,7 @@ export const LostPetSOSTab: React.FC<LostPetSOSTabProps> = ({
               </div>
 
               {/* QR Code */}
-              <div className="p-2 bg-white rounded-xl border border-slate-300 text-center shrink-0">
+              <div className="p-0 bg-transparent rounded-xl border border-slate-300 text-center shrink-0">
                 <div className="w-16 h-16 bg-slate-900 rounded flex items-center justify-center text-white text-[10px] font-bold">
                   QR-МАЯК
                 </div>

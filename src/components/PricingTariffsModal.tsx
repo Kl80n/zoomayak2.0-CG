@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Check, 
@@ -33,6 +33,15 @@ export const PricingTariffsModal: React.FC<PricingTariffsModalProps> = ({
   const [billingCycle, setBillingCycle] = useState<'yearly' | 'monthly'>('yearly');
   const [selectedPlan, setSelectedPlan] = useState<string>('lifetime');
   const [orderedNotice, setOrderedNotice] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -143,17 +152,19 @@ export const PricingTariffsModal: React.FC<PricingTariffsModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-xl overflow-y-auto"
+      className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-xl overflow-y-auto cursor-pointer"
+      onClick={onClose}
       onMouseDown={onClose}
     >
       <div 
-        className="relative w-full max-w-5xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-3xl shadow-2xl overflow-hidden my-4 text-left animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-5xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-3xl shadow-2xl overflow-hidden my-4 text-left animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh] cursor-default"
+        onClick={e => e.stopPropagation()}
         onMouseDown={e => e.stopPropagation()}
       >
         {/* Top Header */}
         <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-cyan-50 dark:from-teal-950 dark:via-slate-900 dark:to-cyan-950 px-6 py-5 border-b border-slate-200 dark:border-teal-500/20 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-teal-500 text-white flex items-center justify-center shadow-md">
+            <div className="w-14 h-14 rounded-2xl bg-teal-500 text-white flex items-center justify-center shadow-md">
               <Crown className="w-5 h-5" />
             </div>
             <div>

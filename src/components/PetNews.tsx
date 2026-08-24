@@ -1317,7 +1317,7 @@ export const PetNews: React.FC = () => {
             >
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div
-                  className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${guide.color} flex items-center justify-center text-white shadow-md`}
+                  className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${guide.color} flex items-center justify-center text-white shadow-md`}
                 >
                   <Icon className="w-5 h-5" />
                 </div>
@@ -1414,7 +1414,7 @@ export const PetNews: React.FC = () => {
       {/* ARTICLE CAROUSEL & GRID */}
       {filteredArticles.length === 0 ? (
         <div className="py-16 text-center bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800">
-          <HelpCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+          <HelpCircle className="w-16 h-16 text-slate-400 mx-auto mb-3" />
           <h3 className="text-base font-black text-slate-900 dark:text-white">
             По вашему запросу ничего не найдено
           </h3>
@@ -1820,7 +1820,7 @@ export const PetNews: React.FC = () => {
 
             <div className="flex items-center gap-3 mb-4">
               <div
-                className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${activeGuideModal.color} flex items-center justify-center text-white shadow-lg`}
+                className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${activeGuideModal.color} flex items-center justify-center text-white shadow-lg`}
               >
                 <activeGuideModal.icon className="w-6 h-6" />
               </div>

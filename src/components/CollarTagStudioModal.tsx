@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   ChevronLeft, 
@@ -45,6 +45,15 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
   const [phone, setPhone] = useState(pet.emergencyContacts[0]?.phone || '+7 (905) 123-45-67');
   const [extraText, setExtraText] = useState('Если я потерялся, просканируйте QR или перейдите по ссылке:');
   const [isOrdered, setIsOrdered] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -119,9 +128,12 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
       <div 
-        className="relative w-full max-w-6xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-[32px] shadow-2xl overflow-hidden my-4 animate-in fade-in zoom-in-95 duration-200 text-left flex flex-col max-h-[94vh] border border-slate-200/80 dark:border-slate-800"
+        className="relative w-full max-w-6xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-[32px] shadow-2xl overflow-hidden my-4 animate-in fade-in zoom-in-95 duration-200 text-left flex flex-col max-h-[94vh] border border-slate-200/80 dark:border-slate-800 cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* TOP BAR */}
@@ -226,7 +238,7 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
                     Выберите форму адресника
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mb-5">
-                    QR-код ведёт на профиль питомца в ЗооМаяке и автоматически подгоняется под форму адресника.
+                    QR-код ведёт на профиль питомца в ЗооМаяке.
                   </p>
 
                   {/* 3 Form Selector Cards: Круг, Лапа, Щит */}
@@ -399,7 +411,7 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
                     <img
                       src="/zoomayak-logo-approved-icon.png"
                       alt="ЗооМаяк"
-                      className="w-10 h-10 object-contain"
+                      className="w-14 h-14 object-contain"
                     />
                     <div>
                       <div className="flex items-center gap-1.5 text-lg font-black text-slate-900 dark:text-white">
@@ -646,7 +658,7 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
                 Интерактивный 3D-просмотр
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mb-4">
-                Поворачивайте жетон мышью, проверяйте увеличенный QR-код и его размещение внутри контура адресника.
+                Поворачивайте жетон мышью, проверяйте QR-код и примеряйте адресник на натуральном кожаном ошейнике.
               </p>
 
               <div className="w-full max-w-xl p-4 bg-slate-50 dark:bg-slate-950/70 rounded-3xl border border-slate-200 dark:border-slate-800">

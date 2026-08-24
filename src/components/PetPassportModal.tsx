@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { QRCodeCanvas } from 'qrcode.react';
+import React, { useEffect, useState } from 'react';
 import { 
   X, 
   ShieldCheck, 
@@ -33,6 +32,15 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
 }) => {
   const [copiedId, setCopiedId] = useState(false);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleCopy = (text: string) => {
@@ -52,17 +60,19 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
   const petRecords = medicalRecords.filter(r => r.petId === pet.id);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto">
-      
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
       {/* Modal Card Backdrop */}
       <div 
-        className="relative w-full max-w-4xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-3xl shadow-2xl overflow-hidden my-6 sm:my-8 animate-in fade-in zoom-in-95 duration-200 text-left"
+        className="relative w-full max-w-4xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-3xl shadow-2xl overflow-hidden my-6 sm:my-8 animate-in fade-in zoom-in-95 duration-200 text-left cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Ribbon */}
         <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-cyan-50 dark:from-teal-950 dark:via-slate-900 dark:to-cyan-950 px-5 sm:px-6 py-4 border-b border-slate-200 dark:border-teal-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center font-black shadow-md">
+            <div className="w-14 h-14 rounded-xl bg-teal-500 text-white flex items-center justify-center font-black shadow-md">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
@@ -112,7 +122,7 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
                 <div className="px-3 py-1 rounded-xl bg-teal-500 text-white font-black text-xs uppercase tracking-wider shadow">
                   Единый ZM-ID
                 </div>
-                <div className="flex items-center gap-2 bg-white dark:bg-slate-900 px-3 py-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs">
+                <div className="flex items-center gap-0 bg-transparent dark:bg-slate-900 px-3 py-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs">
                   <span className="font-mono font-bold text-teal-700 dark:text-teal-300 text-sm">{pet.zmId}</span>
                   <button
                     onClick={() => handleCopy(pet.zmId)}
@@ -193,11 +203,11 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
 
               {/* Real QR Code Badge */}
               <div className="md:col-span-3 flex flex-col items-center justify-center p-4 rounded-2xl bg-white dark:bg-slate-900 text-slate-950 dark:text-white border border-slate-200 dark:border-slate-800 shadow-md text-center">
-                <div className="relative p-2 bg-white border border-slate-200 rounded-xl mb-2 flex items-center justify-center shadow-xs">
+                <div className="relative p-0 bg-transparent border border-slate-200 rounded-xl mb-2 flex items-center justify-center shadow-xs">
                   <ZoomayakQR
                     value={`${window.location.origin}/qr/${encodeURIComponent(pet.zmId)}`}
-                    size={140}
-                    logoSize={42}
+                    size={100}
+                    logoSize={28}
                     lightBackground={true}
                   />
                 </div>
@@ -342,4 +352,3 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
     </div>
   );
 };
-

@@ -1,6 +1,5 @@
 import React from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
-import { ZOOMAYAK_QR_LOGO_SRC } from './ZoomayakQR';
 
 export type TagShape = 'circle' | 'paw' | 'shield';
 export type TagMaterial = 'silver' | 'black' | 'gold' | 'copper';
@@ -127,9 +126,9 @@ export const RealisticMetalTag: React.FC<RealisticMetalTagProps> = ({
           path: 'M 150 44 C 220 44 274 98 274 168 C 274 238 220 292 150 292 C 80 292 26 238 26 168 C 26 98 80 44 150 44 Z',
           hole: { cx: 150, cy: 68, r: 12 },
           front: {
-            qrY: 160,
-            qrSize: 108,
-            brandY: 238,
+            qrY: 162,
+            qrSize: 96,
+            brandY: 236,
             brandSize: 14.5,
           },
           back: {
@@ -151,9 +150,9 @@ export const RealisticMetalTag: React.FC<RealisticMetalTagProps> = ({
           path: 'M 150 26 C 165 26 175 38 175 54 C 190 45 214 44 228 58 C 244 74 239 100 227 114 C 248 119 268 138 268 163 C 268 190 248 210 228 216 C 238 240 226 270 196 285 C 172 297 150 297 150 297 C 150 297 128 297 104 285 C 74 270 62 240 72 216 C 52 210 32 190 32 163 C 32 138 52 119 73 114 C 61 100 56 74 72 58 C 86 44 110 45 125 54 C 125 38 135 26 150 26 Z',
           hole: { cx: 150, cy: 50, r: 11 },
           front: {
-            qrY: 158,
-            qrSize: 106,
-            brandY: 240,
+            qrY: 166,
+            qrSize: 94,
+            brandY: 238,
             brandSize: 14,
           },
           back: {
@@ -176,9 +175,9 @@ export const RealisticMetalTag: React.FC<RealisticMetalTagProps> = ({
           path: 'M 150 32 C 162 32 200 40 236 50 C 248 53 254 60 254 74 C 254 132 248 186 220 236 C 190 282 156 302 150 306 C 144 302 110 282 80 236 C 52 186 46 132 46 74 C 46 60 52 53 64 50 C 100 40 138 32 150 32 Z',
           hole: { cx: 150, cy: 56, r: 12 },
           front: {
-            qrY: 158,
-            qrSize: 108,
-            brandY: 240,
+            qrY: 160,
+            qrSize: 96,
+            brandY: 236,
             brandSize: 14.5,
           },
           back: {
@@ -362,14 +361,17 @@ export const RealisticMetalTag: React.FC<RealisticMetalTagProps> = ({
                     includeMargin={true}
                     marginSize={1}
                     bgColor="#ffffff"
-                    fgColor="#111111"
-                    imageSettings={{
-                      src: ZOOMAYAK_QR_LOGO_SRC,
-                      height: Math.round(shapeData.front.qrSize * 0.3),
-                      width: Math.round(shapeData.front.qrSize * 0.3),
-                      excavate: true,
-                    }}
+                    fgColor={mat.qrFg}
                   />
+
+                  {/* Centered Lighthouse Emblem inside the QR code */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28%] h-[28%] bg-white rounded-md p-0.5 shadow-md flex items-center justify-center border border-slate-300 pointer-events-none">
+                    <img
+                      src="/zoomayak-logo-approved-icon.png"
+                      alt="Маяк"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
                 </div>
               </foreignObject>
 
@@ -512,4 +514,3 @@ export const RealisticMetalTag: React.FC<RealisticMetalTagProps> = ({
     </div>
   );
 };
-

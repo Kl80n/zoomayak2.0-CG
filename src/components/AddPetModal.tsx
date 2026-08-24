@@ -1,4 +1,4 @@
-import React, { useState, useId } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Plus, 
@@ -11,7 +11,6 @@ import {
   ArrowRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { QRCodeCanvas } from 'qrcode.react';
 import { Pet, PetSpecies } from '../types';
 import { ZoomayakLogo } from './ZoomayakLogo';
 import { ZoomayakQR } from './ZoomayakQR';
@@ -44,6 +43,15 @@ export const AddPetModal: React.FC<AddPetModalProps> = ({
 
   // Generated Pet for Success Screen
   const [createdPet, setCreatedPet] = useState<Pet | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -105,16 +113,19 @@ export const AddPetModal: React.FC<AddPetModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
       <div 
-        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-3xl shadow-2xl overflow-hidden my-6 animate-in zoom-in-95 text-left"
+        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-3xl shadow-2xl overflow-hidden my-6 animate-in zoom-in-95 text-left cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header */}
         <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-cyan-50 dark:from-teal-950 dark:via-slate-900 dark:to-cyan-950 px-6 py-4 border-b border-slate-200 dark:border-teal-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center shadow-md">
+            <div className="w-14 h-14 rounded-xl bg-teal-500 text-white flex items-center justify-center shadow-md">
               {step === 'form' ? <Plus className="w-5 h-5" /> : <Check className="w-5 h-5" />}
             </div>
             <div>
@@ -361,11 +372,11 @@ export const AddPetModal: React.FC<AddPetModalProps> = ({
 
               {/* Generated QR Badge Card */}
               <div className="p-4 bg-white dark:bg-slate-900 rounded-2xl border-2 border-teal-500 shadow-xl flex flex-col items-center shrink-0">
-                <div className="p-2 bg-white rounded-xl shadow-inner flex items-center justify-center">
+                <div className="p-0 bg-transparent rounded-xl shadow-inner flex items-center justify-center">
                   <ZoomayakQR
                     value={`${window.location.origin}/qr/${encodeURIComponent(createdPet.zmId)}`}
                     size={140}
-                    logoSize={42}
+                    logoSize={38}
                     lightBackground={true}
                   />
                 </div>
@@ -406,4 +417,3 @@ export const AddPetModal: React.FC<AddPetModalProps> = ({
     </div>
   );
 };
-

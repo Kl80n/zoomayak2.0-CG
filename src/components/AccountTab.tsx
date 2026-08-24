@@ -263,7 +263,7 @@ export const AccountTab: React.FC<AccountTabProps> = (props) => {
         {/* Plan / Stats Cards */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center font-black">
+            <div className="w-14 h-14 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center font-black">
               <PawPrint className="w-5 h-5" />
             </div>
             <div>
@@ -276,7 +276,7 @@ export const AccountTab: React.FC<AccountTabProps> = (props) => {
             onClick={() => setIsTariffsModalOpen(true)}
             className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-teal-500/10 border border-teal-500/40 shadow-sm flex items-center gap-3 transition cursor-pointer text-left group"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black group-hover:scale-105 transition">
+            <div className="w-14 h-14 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black group-hover:scale-105 transition">
               <Crown className="w-5 h-5" />
             </div>
             <div>
@@ -587,7 +587,7 @@ export const AccountTab: React.FC<AccountTabProps> = (props) => {
                 {familyMembers.map((member) => (
                   <div key={member.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold">
+                      <div className="w-14 h-14 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold">
                         {member.name[0]}
                       </div>
                       <div>
