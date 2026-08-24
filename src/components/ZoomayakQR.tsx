@@ -1,6 +1,9 @@
 import React from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 
+/** Единственный утверждённый знак для QR: маяк, собака, кот и сердце. */
+export const ZOOMAYAK_QR_LOGO_SRC = '/zoomayak-logo-approved-icon.png';
+
 interface ZoomayakQRProps {
   value: string;
   size?: number;
@@ -20,9 +23,12 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
   lightBackground = true,
   badgeShape = 'rounded',
 }) => {
-  // Optimal logo size for Level H (~24-26% of QR size ensures 100% scan reliability)
-  const computedLogoSize = logoSize || Math.max(30, Math.round(size * 0.28));
-  const badgeOuterSize = computedLogoSize + 8;
+  // Level H plus an excavated centre keeps the larger brand mark scannable.
+  // Do not let a caller cover more than 30% of either QR dimension.
+  const computedLogoSize = Math.min(
+    logoSize || Math.max(14, Math.round(size * 0.3)),
+    Math.round(size * 0.3),
+  );
 
   return (
     <div
@@ -34,7 +40,7 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
         height: showBorder ? `${size + 20}px` : `${size}px`,
       }}
     >
-      {/* High error-correction QR code canvas with standard quiet-zone margin */}
+      {/* Black-and-white QR with a reserved white centre for the official colour mark. */}
       <QRCodeCanvas
         value={value}
         size={size}
@@ -43,25 +49,14 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
         marginSize={2}
         bgColor="#ffffff"
         fgColor="#111111"
-      />
-
-      {/* Centered official Zoomayak Brand Emblem Plate */}
-      <div
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.25)] border-2 border-teal-600/30 overflow-hidden pointer-events-none z-10 ${
-          badgeShape === 'circle' ? 'rounded-full' : 'rounded-xl'
-        }`}
-        style={{
-          width: `${badgeOuterSize}px`,
-          height: `${badgeOuterSize}px`,
+        imageSettings={{
+          src: ZOOMAYAK_QR_LOGO_SRC,
+          height: computedLogoSize,
+          width: computedLogoSize,
+          excavate: true,
         }}
-      >
-        <img
-          src="/zoomayak-logo-approved-icon.png"
-          alt="ЗооМаяк"
-          className="w-full h-full object-contain p-1"
-          loading="eager"
-        />
-      </div>
+      />
     </div>
   );
 };
+
