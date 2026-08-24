@@ -196,8 +196,8 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
                 <div className="relative p-2 bg-white border border-slate-200 rounded-xl mb-2 flex items-center justify-center shadow-xs">
                   <ZoomayakQR
                     value={`${window.location.origin}/qr/${encodeURIComponent(pet.zmId)}`}
-                    size={120}
-                    logoSize={34}
+                    size={140}
+                    logoSize={42}
                     lightBackground={true}
                   />
                 </div>
@@ -342,3 +342,4 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
     </div>
   );
 };
+
