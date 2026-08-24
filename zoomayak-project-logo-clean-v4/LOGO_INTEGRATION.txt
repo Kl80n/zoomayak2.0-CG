@@ -1,0 +1,4 @@
+Интегрирован утверждённый master-логотип ЗооМаяк.
+public/logo/zoomayak-master.png — полный логотип.
+public/logo/zoomayak-qr-mark.png — знак для QR.
+Заменены только найденные ссылки на старые/временные logo.svg, emblem.svg и zoomayak-logo-approved-icon.png.
