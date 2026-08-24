@@ -21,7 +21,7 @@ export const ZoomayakLogo: React.FC<ZoomayakLogoProps> = ({
     return (
       <span className={`zoomayak-logo-compact bg-transparent ${className}`} aria-label="ЗооМаяк">
         <img
-          src="/zoomayak-logo-approved-icon.png"
+          src="/logo/zoomayak-master.png"
           alt=""
           className="zoomayak-logo-icon zoomayak-logo-light bg-transparent mix-blend-multiply dark:mix-blend-normal"
           aria-hidden="true"

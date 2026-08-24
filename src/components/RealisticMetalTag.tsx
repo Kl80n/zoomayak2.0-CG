@@ -367,7 +367,7 @@ export const RealisticMetalTag: React.FC<RealisticMetalTagProps> = ({
                   {/* Centered Lighthouse Emblem inside the QR code */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28%] h-[28%] bg-white rounded-md p-0.5 shadow-md flex items-center justify-center border border-slate-300 pointer-events-none">
                     <img
-                      src="/zoomayak-logo-approved-icon.png"
+                      src="/logo/zoomayak-master.png"
                       alt="Маяк"
                       className="w-full h-full object-contain"
                     />
