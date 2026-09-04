@@ -6,8 +6,7 @@ interface ZoomayakMarkProps {
 }
 
 /**
- * Brand mark: Labrador outline on the left, cat outline on the right,
- * heart in the middle. Stroke-only so one drawing works in both themes.
+ * Outline mark: Labrador on the left, cat on the right, heart in the middle.
  */
 export const ZoomayakMark: React.FC<ZoomayakMarkProps> = ({
   className = '',
@@ -15,7 +14,7 @@ export const ZoomayakMark: React.FC<ZoomayakMarkProps> = ({
 }) => (
   <svg
     className={`zm-mark ${className}`}
-    viewBox="0 0 260 200"
+    viewBox="0 0 280 200"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     role="img"
@@ -26,53 +25,48 @@ export const ZoomayakMark: React.FC<ZoomayakMarkProps> = ({
     <g
       className="zm-outline"
       stroke="var(--zm-accent)"
-      strokeWidth="6.5"
+      strokeWidth="7"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {/* Labrador sitting, facing the heart — blocky head, floppy ear, otter tail */}
-      <path d="M24 178
-               C22 152 28 130 42 118
-               C38 102 42 86 58 76
-               C70 68 86 72 92 84
-               C102 80 114 86 118 96
-               C122 104 118 112 108 114
-               C100 116 94 110 90 106
-               C86 120 80 142 76 162
-               C84 158 92 164 88 178 Z" />
-      <path d="M62 84 C50 90 44 108 48 122" />
-      <path d="M30 138 C16 128 12 108 20 90" />
-      <circle cx="100" cy="92" r="3" fill="var(--zm-accent)" stroke="none" />
+      <g transform="translate(-10 0)">
+        {/* Labrador sitting, facing the heart */}
+        <path d="M28 172 C22 142 32 118 54 112 C68 108 78 118 80 132 C82 148 74 160 62 172 Z" />
+        <path d="M78 136 L82 172" />
+        <path d="M90 140 L92 172" />
+        <path d="M70 118 C74 102 82 90 96 86" />
+        <path d="M88 90 C88 74 102 64 116 66 C128 68 138 76 140 86 C142 94 138 100 128 104 C118 108 108 106 100 100 C94 106 88 100 88 90 Z" />
+        <path d="M98 74 C86 78 80 94 84 110 C92 104 100 90 102 80" />
+        <path d="M32 128 C18 120 10 100 18 82" />
+        <circle cx="124" cy="82" r="3.4" fill="var(--zm-accent)" stroke="none" />
+      </g>
 
-      {/* Cat sitting, facing the heart — pointed ears, curled tail */}
-      <path d="M236 178
-               C238 152 232 130 218 118
-               C222 102 218 86 202 76
-               C190 68 174 72 168 84
-               C158 80 146 86 142 96
-               C138 104 142 112 152 114
-               C160 116 166 110 170 106
-               C174 120 180 142 184 162
-               C176 158 168 164 172 178 Z" />
-      <path d="M176 80 L170 54 L188 76" />
-      <path d="M192 74 L206 50 L208 78" />
-      <path d="M230 140 C246 128 250 106 238 88 C230 76 216 80 214 96" />
-      <circle cx="160" cy="92" r="3" fill="var(--zm-accent)" stroke="none" />
+      <g transform="translate(10 0)">
+        {/* Cat sitting, facing the heart */}
+        <path d="M252 172 C258 142 248 118 226 112 C212 108 202 118 200 132 C198 148 206 160 218 172 Z" />
+        <path d="M202 136 L198 172" />
+        <path d="M190 140 L188 172" />
+        <path d="M210 118 C206 102 198 90 184 86" />
+        <circle cx="176" cy="84" r="22" />
+        <path d="M162 70 L156 46 L174 66" />
+        <path d="M186 66 L200 44 L196 70" />
+        <path d="M248 128 C264 118 270 96 258 78 C250 66 236 70 234 86" />
+        <circle cx="168" cy="82" r="3.4" fill="var(--zm-accent)" stroke="none" />
+      </g>
     </g>
 
-    {/* Heart in the middle */}
     <path
       className="zm-heart"
-      d="M130 136
-         C130 136 98 110 98 86
-         C98 72 108 64 120 64
-         C126 64 128 68 130 76
-         C132 68 134 64 140 64
-         C152 64 162 72 162 86
-         C162 110 130 136 130 136 Z"
+      d="M140 138
+         C140 138 110 114 110 90
+         C110 78 118 70 128 70
+         C134 70 138 74 140 82
+         C142 74 146 70 152 70
+         C162 70 170 78 170 90
+         C170 114 140 138 140 138 Z"
       fill="var(--zm-heart)"
       stroke="var(--zm-accent)"
-      strokeWidth="4"
+      strokeWidth="4.5"
       strokeLinejoin="round"
     />
   </svg>
