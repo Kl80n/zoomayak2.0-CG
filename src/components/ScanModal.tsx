@@ -32,6 +32,15 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
     if (videoRef.current) videoRef.current.srcObject = null;
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   const findPetFromQr = useCallback((raw: string) => {
     const value = raw.trim();
     const normalized = value.toLowerCase();
@@ -74,7 +83,6 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
     }
 
     try {
-      // Request permission explicitly first. This also makes mobile Safari/Chrome show the camera prompt.
       const permissionStream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: { ideal: requestedFacing } },
         audio: false,
@@ -111,16 +119,16 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
       const name = error instanceof DOMException ? error.name : '';
       if (name === 'NotAllowedError' || name === 'SecurityError') {
         setCameraState('denied');
-        setCameraMessage('Доступ к камере запрещён. Разрешите камеру для zoomayak.vercel.app в настройках браузера.');
+        setCameraMessage('Доступ к камере запрещён в браузере.');
       } else if (name === 'NotFoundError' || name === 'OverconstrainedError') {
         setCameraState('error');
         setCameraMessage('Камера не найдена или недоступна.');
       } else {
         setCameraState('error');
-        setCameraMessage('Не удалось запустить камеру. Попробуйте ещё раз.');
+        setCameraMessage('Не удалось запустить камеру.');
       }
     }
-  }, [handleDecodedText, stopCamera]);
+  }, [cameraDeviceIndex, handleDecodedText, stopCamera]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -166,26 +174,32 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
       setScannedPet(found);
       confetti({ particleCount: 40 });
     } else {
-      alert('Питомец с таким ZM-ID или чипом не найден в демонстрационной базе.');
+      alert('Питомец с таким ZM-ID или чипом не найден.');
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-slate-900 border border-teal-500/40 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden my-1 sm:my-6 text-left">
-        <div className="bg-gradient-to-r from-teal-950 via-slate-900 to-cyan-950 px-4 sm:px-6 py-3 sm:py-4 border-b border-teal-500/20 flex items-center justify-between gap-3">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-xl overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-teal-500/40 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden my-1 sm:my-6 text-left cursor-default"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-cyan-50 dark:from-teal-950 dark:via-slate-900 dark:to-cyan-950 px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-teal-500/20 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center text-slate-950">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-teal-500 flex items-center justify-center text-white shadow-md">
               <QrCode className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="text-base sm:text-lg font-extrabold text-white truncate">Сканер QR-Маяка</h3>
-              <p className="text-[10px] sm:text-xs text-teal-300 truncate">Наведите камеру на QR-адресник</p>
+              <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white truncate">Сканер QR-Маяка</h3>
+              <p className="text-[10px] sm:text-xs text-teal-700 dark:text-teal-300 font-medium truncate">Наведите камеру на QR-адресник</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl bg-slate-800 hover:bg-rose-950 text-slate-400 shrink-0" aria-label="Закрыть">
+          <button onClick={onClose} className="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-950 dark:hover:text-rose-400 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shrink-0 cursor-pointer" aria-label="Закрыть">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -196,12 +210,14 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
               <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" muted playsInline autoPlay />
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-black/40" />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[min(72vw,260px)] aspect-square border-2 border-teal-300/80 rounded-2xl shadow-[0_0_0_999px_rgba(0,0,0,.28)] relative">
-                  <span className="absolute -top-1 -left-1 w-7 h-7 border-t-4 border-l-4 border-teal-300 rounded-tl-xl" />
-                  <span className="absolute -top-1 -right-1 w-7 h-7 border-t-4 border-r-4 border-teal-300 rounded-tr-xl" />
-                  <span className="absolute -bottom-1 -left-1 w-7 h-7 border-b-4 border-l-4 border-teal-300 rounded-bl-xl" />
-                  <span className="absolute -bottom-1 -right-1 w-7 h-7 border-b-4 border-r-4 border-teal-300 rounded-br-xl" />
-                  <div className="absolute left-3 right-3 top-1/2 h-0.5 bg-teal-300 shadow-[0_0_14px_rgba(45,212,191,.9)] animate-pulse" />
+                <div className="w-[min(72vw,260px)] aspect-square border-2 border-teal-300/80 rounded-2xl shadow-[0_0_0_999px_rgba(0,0,0,.32)] relative overflow-hidden">
+                  <span className="absolute -top-1 -left-1 w-7 h-7 border-t-4 border-l-4 border-teal-300 rounded-tl-xl z-20" />
+                  <span className="absolute -top-1 -right-1 w-7 h-7 border-t-4 border-r-4 border-teal-300 rounded-tr-xl z-20" />
+                  <span className="absolute -bottom-1 -left-1 w-7 h-7 border-b-4 border-l-4 border-teal-300 rounded-bl-xl z-20" />
+                  <span className="absolute -bottom-1 -right-1 w-7 h-7 border-b-4 border-r-4 border-teal-300 rounded-br-xl z-20" />
+                  
+                  {/* Active Moving Laser Scan Beam */}
+                  <div className="scanner-laser-beam" />
                 </div>
               </div>
               <div className="absolute top-3 right-3 flex items-center gap-2">
@@ -220,7 +236,7 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
                   {cameraMessage}
                 </span>
                 {(cameraState === 'denied' || cameraState === 'error' || cameraState === 'unsupported') && (
-                  <button onClick={resetScanner} className="rounded-full bg-teal-400 text-slate-950 px-3 py-1.5 text-[10px] font-extrabold flex items-center gap-1.5">
+                  <button onClick={resetScanner} className="rounded-full bg-teal-400 text-slate-950 px-3 py-1.5 text-[10px] font-extrabold flex items-center gap-1.5 cursor-pointer">
                     <RefreshCw className="w-3.5 h-3.5" /> Повторить
                   </button>
                 )}
@@ -229,9 +245,9 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
           )}
 
           {isScanning && (
-            <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-[11px] sm:text-xs text-slate-400 flex gap-2 items-start">
-              <Camera className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-              <span>Камера работает прямо в браузере. На телефоне разрешите доступ к камере, когда браузер спросит.</span>
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 p-3 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 flex gap-2 items-start">
+              <Camera className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0 mt-0.5" />
+              <span>Камера работает прямо в браузере. Разрешите доступ к камере в браузере при запросе.</span>
             </div>
           )}
 
@@ -242,39 +258,39 @@ export const ScanModal: React.FC<ScanModalProps> = ({ isOpen, onClose, pets, onO
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="ZM-ID или номер микрочипа"
-                className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 text-xs text-white focus:border-teal-400 focus:outline-none font-mono"
+                className="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-3 text-xs text-slate-900 dark:text-white focus:border-teal-500 focus:outline-none font-mono"
               />
-              <button type="submit" className="px-5 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2">
+              <button type="submit" className="px-5 py-3 rounded-xl bg-teal-500 hover:bg-teal-600 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition cursor-pointer">
                 <Search className="w-4 h-4" /> Найти
               </button>
             </form>
           )}
 
           {scannedPet && (
-            <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-950 border-2 border-emerald-500/50 shadow-2xl space-y-4">
-              <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+            <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-50 dark:bg-slate-950 border-2 border-emerald-500/50 shadow-xl space-y-4">
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
                 <Check className="w-4 h-4" /> Питомец успешно опознан
               </div>
               <div className="flex items-center gap-4">
-                <img src={scannedPet.photoUrl} alt={scannedPet.name} className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-2 ring-emerald-400" />
+                <img src={scannedPet.photoUrl} alt={scannedPet.name} className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-2 ring-emerald-500 shadow-md" />
                 <div className="min-w-0">
-                  <h4 className="text-xl sm:text-2xl font-black text-white">{scannedPet.name}</h4>
-                  <p className="text-xs font-semibold text-slate-300">{scannedPet.breed} • {scannedPet.ageText}</p>
-                  <p className="text-xs font-mono text-teal-400 mt-0.5 truncate">ID: {scannedPet.zmId}</p>
+                  <h4 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{scannedPet.name}</h4>
+                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">{scannedPet.breed} • {scannedPet.ageText}</p>
+                  <p className="text-xs font-mono text-teal-700 dark:text-teal-400 mt-0.5 truncate font-bold">ID: {scannedPet.zmId}</p>
                 </div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 space-y-1">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 space-y-1 shadow-xs">
                 <div><strong>Владелец:</strong> {scannedPet.emergencyContacts[0]?.name}</div>
                 <div><strong>Особые приметы:</strong> {scannedPet.specialNotes}</div>
-                {scannedPet.allergies.length > 0 && <div className="text-amber-400 font-semibold flex gap-1"><AlertCircle className="w-4 h-4 shrink-0" /> Внимание: {scannedPet.allergies.join(', ')}</div>}
+                {scannedPet.allergies.length > 0 && <div className="text-amber-600 dark:text-amber-400 font-semibold flex gap-1"><AlertCircle className="w-4 h-4 shrink-0" /> Внимание: {scannedPet.allergies.join(', ')}</div>}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                <a href={`tel:${scannedPet.emergencyContacts[0]?.phone}`} className="py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2">
+                <a href={`tel:${scannedPet.emergencyContacts[0]?.phone}`} className="py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition">
                   <Phone className="w-4 h-4" /> Позвонить владельцу
                 </a>
-                <button onClick={() => { onClose(); onOpenPetProfile(scannedPet); }} className="py-3 rounded-xl bg-slate-800 text-teal-300 text-xs font-bold hover:bg-slate-700">Полный паспорт</button>
+                <button onClick={() => { onClose(); onOpenPetProfile(scannedPet); }} className="py-3 rounded-xl bg-slate-200 dark:bg-slate-800 text-teal-800 dark:text-teal-300 text-xs font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition cursor-pointer">Полный паспорт</button>
               </div>
-              <button onClick={resetScanner} className="w-full text-center text-xs text-slate-400 hover:text-white pt-1">Сканировать другого питомца</button>
+              <button onClick={resetScanner} className="w-full text-center text-xs text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white pt-1 cursor-pointer">Сканировать другого питомца</button>
             </div>
           )}
         </div>

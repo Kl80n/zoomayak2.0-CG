@@ -1,5 +1,4 @@
 import React from 'react';
-import { ZoomayakLogo } from './ZoomayakLogo';
 import { 
   Heart, 
   ShieldCheck, 
@@ -7,9 +6,11 @@ import {
   Mail, 
   Sparkles, 
   QrCode, 
+  Compass,
   FileText
 } from 'lucide-react';
 import { ActiveNavTab } from '../types';
+import { ZoomayakLogo } from './ZoomayakLogo';
 
 interface FooterProps {
   onSelectTab: (tab: ActiveNavTab) => void;
@@ -25,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenScanModal,
 }) => {
   return (
-    <footer className="site-footer mt-20 border-t relative overflow-hidden text-left">
+    <footer className="mt-20 border-t border-slate-200/90 dark:border-slate-800/80 bg-slate-100/70 dark:bg-slate-950/95 relative overflow-hidden text-left transition-colors duration-200">
       
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-t from-teal-500/10 to-transparent blur-3xl pointer-events-none"></div>
@@ -35,13 +36,13 @@ export const Footer: React.FC<FooterProps> = ({
           
           {/* Col 1: Brand */}
           <div className="space-y-4 md:col-span-1">
-            <div className="footer-brand">
+            <div className="flex items-center gap-2.5">
               <ZoomayakLogo />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
               Единый цифровой профиль и экосистема заботы о питомцах. Международная интеграция ветпаспортов, поиск потеряшек и умные QR-адресники.
             </p>
-            <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
+            <div className="flex items-center gap-2 text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
               <ShieldCheck className="w-4 h-4" />
               <span>ISO 11784 / 11785 Совместимость</span>
             </div>
@@ -49,27 +50,27 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 2: Ecosystem */}
           <div>
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-300 mb-4">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-4">
               Экосистема
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-400 font-medium">
               <li>
-                <button onClick={() => onSelectTab('pets')} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={() => onSelectTab('account')} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Цифровые профили питомцев
                 </button>
               </li>
               <li>
-                <button onClick={onOpenPassport} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={onOpenPassport} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Ветеринарный паспорт онлайн
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectTab('reminders')} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={() => onSelectTab('account')} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Календарь вакцинации и заботы
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectTab('health')} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={() => onSelectTab('account')} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Электронная медкарта
                 </button>
               </li>
@@ -78,27 +79,27 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 3: Services & Tools */}
           <div>
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-300 mb-4">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-4">
               Сервисы & Жетон
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-400 font-medium">
               <li>
-                <button onClick={onOpenCollarStudio} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={onOpenCollarStudio} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Конструктор QR-адресника
                 </button>
               </li>
               <li>
-                <button onClick={onOpenScanModal} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={onOpenScanModal} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Сканер микрочипа и QR
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectTab('lost')} className="hover:text-rose-400 transition cursor-pointer">
+                <button onClick={() => onSelectTab('lost')} className="hover:text-rose-600 dark:hover:text-rose-400 transition cursor-pointer">
                   Потеряшка SOS & Радар
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectTab('services')} className="hover:text-teal-300 transition cursor-pointer">
+                <button onClick={() => onSelectTab('services')} className="hover:text-teal-600 dark:hover:text-teal-300 transition cursor-pointer">
                   Проверенные ветклиники и груминг
                 </button>
               </li>
@@ -107,18 +108,18 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 4: Support & 24/7 Hotline */}
           <div className="space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-300 mb-4">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-4">
               Круглосуточная помощь 24/7
             </h4>
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-              <div className="text-[11px] text-slate-400 mb-1">Экстренная вет-линия:</div>
-              <a href="tel:+74951209000" className="text-base font-extrabold text-teal-300 hover:underline block">
+            <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400 mb-1 font-medium">Экстренная вет-линия:</div>
+              <a href="tel:+74951209000" className="text-base font-extrabold text-teal-600 dark:text-teal-300 hover:underline block">
                 +7 (495) 120-90-00
               </a>
-              <div className="text-[10px] text-slate-500 mt-1">Бесплатно по всей России</div>
+              <div className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">Бесплатно по всей России</div>
             </div>
-            <div className="text-xs text-slate-400 flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-teal-400" />
+            <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1.5 font-medium">
+              <Mail className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
               <span>support@zoomayak.ru</span>
             </div>
           </div>
@@ -126,16 +127,16 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
           <div>
             © 2026 ЗооМаяк. Все права защищены.
           </div>
           <div className="flex items-center gap-4">
-            <span className="hover:text-slate-300 cursor-pointer">Политика конфиденциальности</span>
+            <span className="hover:text-slate-800 dark:hover:text-slate-200 transition cursor-pointer">Политика конфиденциальности</span>
             <span>•</span>
-            <span className="hover:text-slate-300 cursor-pointer">Пользовательское соглашение</span>
+            <span className="hover:text-slate-800 dark:hover:text-slate-200 transition cursor-pointer">Пользовательское соглашение</span>
             <span>•</span>
-            <span className="hover:text-slate-300 cursor-pointer">API для ветеринаров</span>
+            <span className="hover:text-slate-800 dark:hover:text-slate-200 transition cursor-pointer">API для ветеринаров</span>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-export type PetSpecies = 'dog' | 'cat' | 'other';
+export type PetSpecies = 'dog' | 'cat' | 'bird' | 'rodent' | 'reptile' | 'other';
 
 export interface WeightRecord {
   date: string;
@@ -119,34 +119,4 @@ export interface AnimalListing {
   verified?: boolean;
 }
 
-export type ActiveNavTab = 'home' | 'pets' | 'reminders' | 'health' | 'lost' | 'services';
-
-export interface OwnerProfile {
-  name: string;
-  phone: string;
-  email: string;
-  city: string;
-  showPhone: boolean;
-  showName: boolean;
-  showCity: boolean;
-}
-
-export interface SightingReport {
-  id: string;
-  petId: string;
-  zmId: string;
-  lat: number;
-  lng: number;
-  accuracy: number;
-  reportedAt: string;
-}
-
-export const DEFAULT_OWNER: OwnerProfile = {
-  name: 'Владелец аккаунта',
-  phone: '',
-  email: '',
-  city: '',
-  showPhone: false,
-  showName: true,
-  showCity: true,
-};
+export type ActiveNavTab = 'home' | 'account' | 'lost' | 'services';
