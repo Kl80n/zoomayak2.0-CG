@@ -12,7 +12,7 @@ import {
   Printer
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { QRCodeCanvas } from 'qrcode.react';
+import { ZoomayakQR } from './ZoomayakQR';
 import { Pet } from '../types';
 import { ZoomayakLogo } from './ZoomayakLogo';
 
@@ -23,7 +23,7 @@ interface CollarTagStudioModalProps {
 }
 
 type TagMaterial = 'teal' | 'black' | 'gold' | 'silver' | 'purple';
-type TagShape = 'circle' | 'shield' | 'hexagon' | 'bone';
+type TagShape = 'circle' | 'shield' | 'paw' | 'hexagon' | 'bone';
 
 export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
   isOpen,
@@ -147,7 +147,7 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
 
               {/* Tag Body */}
               <div
-                className={`w-48 h-48 sm:w-52 sm:h-52 ${shape === 'circle' ? 'rounded-full' : shape === 'shield' ? 'rounded-b-3xl rounded-t-xl' : 'rounded-3xl'} ${matStyles.bg} border-4 ${matStyles.border} shadow-2xl ${matStyles.glow} flex flex-col items-center justify-center p-4 text-center transform transition-all duration-300 group-hover:scale-105`}
+                className={`w-48 h-48 sm:w-52 sm:h-52 ${shape === 'circle' ? 'rounded-full' : shape === 'shield' ? 'rounded-b-3xl rounded-t-xl' : shape === 'paw' ? 'tag-shape-paw' : 'rounded-3xl'} ${matStyles.bg} border-4 ${matStyles.border} shadow-2xl ${matStyles.glow} flex flex-col items-center justify-center p-4 text-center transform transition-all duration-300 group-hover:scale-105`}
               >
                 {/* Master brand mark */}
                 <div className="mb-1 text-white/90"><ZoomayakLogo compact /></div>
@@ -159,19 +159,12 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
 
                 {/* Real QR: opens the public pet profile. Logo is embedded with high error correction. */}
                 <div className="w-20 h-20 bg-white p-1.5 rounded-lg my-1.5 shadow-inner flex items-center justify-center">
-                  <QRCodeCanvas
+                  <ZoomayakQR
                     value={`${window.location.origin}/qr/${encodeURIComponent(pet.zmId)}`}
                     size={70}
-                    level="H"
-                    includeMargin={false}
-                    imageSettings={{
-                      src: '/zoomayak-logo-approved-icon.png',
-                      height: 16,
-                      width: 16,
-                      excavate: true,
-                    }}
                   />
                 </div>
+                <div className="text-[9px] font-extrabold tracking-wide opacity-90">♥ ЗооМаяк ♥</div>
 
                 {/* ZM-ID string */}
                 <div className="text-[10px] font-mono font-bold tracking-wider opacity-90">
@@ -232,8 +225,8 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { id: 'circle', label: 'Круг' },
+                  { id: 'paw', label: 'Лапа' },
                   { id: 'shield', label: 'Щит' },
-                  { id: 'hexagon', label: 'Гексагон' },
                 ].map((s) => (
                   <button
                     key={s.id}

@@ -359,3 +359,41 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
   .brand-block { min-width: 150px; }
   .zoomayak-approved-logo-img { width: 150px !important; }
 }
+
+.zoomayak-qr { display: inline-flex; background: #fff; border-radius: 8px; overflow: hidden; }
+.zoomayak-qr canvas { display: block; }
+.tag-shape-paw { border-radius: 42% 42% 38% 38% / 38% 38% 48% 48%; }
+
+.hero-product-card { padding: 18px 18px 16px; border: 1px solid color-mix(in srgb, var(--green) 20%, var(--line)); border-radius: 24px; background: var(--surface); }
+.hero-product-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.hero-product-brand span { color: var(--muted); font-size: 10px; font-weight: 750; }
+.hero-product-card h2 { margin: 0 0 6px; font-size: 20px; font-weight: 900; color: var(--text); }
+.hero-product-card > p { margin: 0 0 14px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.tag-proto-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tag-proto { border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); padding: 10px 8px 12px; color: var(--text); text-align: center; }
+.tag-proto:hover { border-color: color-mix(in srgb, var(--green) 40%, var(--line)); }
+.tag-proto-face { margin: 0 auto 8px; width: 92px; height: 92px; display: grid; place-items: center; background: linear-gradient(180deg, #dfe4ea, #9aa3ad); border: 1px solid #c5ccd3; }
+.tag-proto-circle .tag-proto-face { border-radius: 50%; }
+.tag-proto-paw .tag-proto-face { border-radius: 42% 42% 38% 38% / 38% 38% 48% 48%; }
+.tag-proto-shield .tag-proto-face { border-radius: 18px 18px 28px 28px; }
+.tag-proto-face small { display: block; margin-top: 2px; font-size: 7px; font-weight: 800; color: #1f2933; }
+.tag-proto strong { display: block; font-size: 12px; }
+.tag-proto span { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+.home-spec-card { padding: 16px; }
+.home-spec-row { display: flex; flex-wrap: wrap; gap: 10px 16px; padding-top: 8px; color: var(--text); font-size: 12px; font-weight: 750; }
+.home-spec-row span { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.home-spec-row svg { width: 15px; height: 15px; color: var(--green); }
+
+.site-footer { background: var(--surface); border-color: var(--line); color: var(--text); }
+.site-footer .text-slate-400, .site-footer .text-slate-300, .site-footer .text-white { color: var(--muted) !important; }
+.site-footer h4 { color: var(--text) !important; }
+.footer-brand .zoomayak-approved-logo-img { width: 168px !important; }
+
+html.theme-light, html.theme-light body { background: var(--bg); color: var(--text); }
+html.theme-light .bg-slate-950\/80, html.theme-light .bg-slate-950\/85, html.theme-light .bg-slate-950\/90 { background: color-mix(in srgb, var(--surface) 92%, transparent) !important; }
+html.theme-light .account-modal, html.theme-light .publish-modal { background: var(--surface); color: var(--text); }
+
+@media (max-width: 760px) {
+  .tag-proto-row { grid-template-columns: 1fr; }
+  .hero-product-card { padding: 14px; }
+}
