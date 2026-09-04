@@ -21,13 +21,16 @@ interface HeaderProps {
   onToggleTheme: () => void;
 }
 
-const navItems: Array<{ id: ActiveNavTab; label: string }> = [
+const publicNav: Array<{ id: ActiveNavTab; label: string }> = [
   { id: 'home', label: 'Главная' },
+  { id: 'services', label: 'Объявления' },
+  { id: 'lost', label: 'Потеряшка SOS' },
+];
+
+const cabinetNav: Array<{ id: ActiveNavTab; label: string }> = [
   { id: 'pets', label: 'Мои питомцы' },
   { id: 'reminders', label: 'Напоминания' },
   { id: 'health', label: 'Здоровье' },
-  { id: 'lost', label: 'Потеряшка SOS' },
-  { id: 'services', label: 'Объявления' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({
@@ -38,6 +41,9 @@ export const Header: React.FC<HeaderProps> = ({
   const [petDropdownOpen, setPetDropdownOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
+  const inCabinet = activeTab === 'pets' || activeTab === 'reminders' || activeTab === 'health';
+  const navItems = inCabinet ? [...publicNav, ...cabinetNav] : publicNav;
+
   return (
     <header className="site-header sticky top-0 z-40 w-full">
       <div className="site-header-inner max-w-[1400px] mx-auto px-4 sm:px-6 xl:px-8 min-h-[78px] flex items-center gap-4">
@@ -45,6 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
           <ZoomayakLogo />
         </button>
 
+        {inCabinet && (
         <div className="relative hidden lg:block">
           <button
             type="button"
@@ -70,6 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
         </div>
+        )}
 
         <nav className="main-nav hidden xl:flex items-center gap-1 flex-1 justify-center" aria-label="Основная навигация">
           {navItems.map((item) => {
@@ -100,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>}
           </div>
 
-          <button onClick={onOpenAccount} className="account-header-button" aria-label="Открыть личный кабинет" title="Личный кабинет">
+          <button onClick={() => { onOpenAccount(); setActiveTab('pets'); }} className="account-header-button" aria-label="Открыть личный кабинет" title="Личный кабинет">
             <span className="account-header-icon"><UserRound className="w-4 h-4" /></span>
             <span className="hidden lg:block text-left leading-tight"><strong>Личный кабинет</strong><small>Профиль владельца</small></span>
           </button>
@@ -108,11 +116,11 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="mobile-tools xl:hidden max-w-[1400px] mx-auto px-4 pt-2 flex items-center justify-between gap-2">
-        <button onClick={onOpenAccount} className="mobile-account-button"><span className="account-header-icon"><UserRound className="w-4 h-4" /></span><span>Личный кабинет</span></button>
+        <button onClick={() => { onOpenAccount(); setActiveTab('pets'); }} className="mobile-account-button"><span className="account-header-icon"><UserRound className="w-4 h-4" /></span><span>Личный кабинет</span></button>
         <div className="flex items-center gap-1 shrink-0">
           <button onClick={onToggleTheme} className="mobile-theme-button" aria-label="Переключить тему">{theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}</button>
           <button onClick={onOpenScanModal} className="mobile-theme-button" aria-label="Сканировать QR"><QrCode className="w-4 h-4" /></button>
-          <button onClick={onOpenPassport} className="mobile-theme-button" aria-label="Открыть паспорт питомца"><CheckCircle2 className="w-4 h-4" /></button>
+          {inCabinet && <button onClick={onOpenPassport} className="mobile-theme-button" aria-label="Открыть паспорт питомца"><CheckCircle2 className="w-4 h-4" /></button>}
         </div>
       </div>
 

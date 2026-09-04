@@ -1,4 +1,5 @@
 import React from 'react';
+import { ZoomayakLogo } from './ZoomayakLogo';
 import { 
   Heart, 
   ShieldCheck, 
@@ -6,7 +7,6 @@ import {
   Mail, 
   Sparkles, 
   QrCode, 
-  Compass,
   FileText
 } from 'lucide-react';
 import { ActiveNavTab } from '../types';
@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenScanModal,
 }) => {
   return (
-    <footer className="mt-20 border-t border-slate-800/80 bg-slate-950/95 relative overflow-hidden text-left">
+    <footer className="site-footer mt-20 border-t relative overflow-hidden text-left">
       
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-t from-teal-500/10 to-transparent blur-3xl pointer-events-none"></div>
@@ -35,13 +35,8 @@ export const Footer: React.FC<FooterProps> = ({
           
           {/* Col 1: Brand */}
           <div className="space-y-4 md:col-span-1">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-slate-950 font-black shadow-md">
-                <Compass className="w-6 h-6" />
-              </div>
-              <span className="text-xl font-extrabold text-white font-display">
-                Зоо<span className="text-teal-400">Маяк</span>
-              </span>
+            <div className="footer-brand">
+              <ZoomayakLogo />
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
               Единый цифровой профиль и экосистема заботы о питомцах. Международная интеграция ветпаспортов, поиск потеряшек и умные QR-адресники.

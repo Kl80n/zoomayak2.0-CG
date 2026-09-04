@@ -28,6 +28,7 @@ import { SOSAlertModal } from './components/SOSAlertModal';
 import { Footer } from './components/Footer';
 import { PublicPetProfile } from './components/PublicPetProfile';
 import { AccountModal } from './components/AccountModal';
+import { ZoomayakLogo } from './components/ZoomayakLogo';
 import { usePersistentState } from './storage';
 
 function findPetByPublicId(pets: Pet[], publicId: string) {
@@ -101,18 +102,20 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle('theme-light', theme === 'light');
+    document.documentElement.classList.toggle('theme-dark', theme === 'dark');
   }, [theme]);
 
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   if (!selectedPet) {
     return (
-      <div className="min-h-screen bg-[#090d16] text-white grid place-items-center p-6">
+          <div className="min-h-screen app-shell grid place-items-center p-6">
         <div className="max-w-md text-center">
-          <div className="text-5xl mb-4">🐾</div>
+          <div className="mb-4 flex justify-center"><ZoomayakLogo /></div>
           <h1 className="text-2xl font-extrabold mb-2">ЗооМаяк</h1>
-          <p className="text-slate-400 mb-6">Добавьте первого питомца, чтобы начать.</p>
-          <button onClick={() => setIsAddPetOpen(true)} className="px-5 py-3 rounded-2xl bg-teal-400 text-slate-950 font-extrabold">Добавить питомца</button>
+          <p className="mb-6" style={{color:'var(--muted)'}}>Добавьте первого питомца, чтобы начать.</p>
+          <button onClick={() => setIsAddPetOpen(true)} className="primary-cta">Добавить питомца</button>
         </div>
         <AddPetModal isOpen={isAddPetOpen} onClose={() => setIsAddPetOpen(false)} onAddPet={handleAddPet} owner={owner} />
       </div>
@@ -144,13 +147,10 @@ export default function App() {
         {activeTab === 'home' && (
           <div className="space-y-6">
             <HeroSection
-              selectedPet={selectedPet}
-              reminders={reminders}
-              onOpenPassport={() => setIsPassportOpen(true)}
+              onOpenCabinet={() => setActiveTab('pets')}
               onOpenCollarStudio={() => setIsCollarStudioOpen(true)}
-              onOpenSOS={() => setIsSOSModalOpen(true)}
-              onSelectPets={() => setActiveTab('pets')}
-              onOpenReminders={() => setActiveTab('reminders')}
+              onOpenSOS={() => setActiveTab('lost')}
+              onOpenListings={() => setActiveTab('services')}
             />
 
           </div>

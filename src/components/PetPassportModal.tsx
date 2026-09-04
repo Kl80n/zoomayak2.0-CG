@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { QRCodeCanvas } from 'qrcode.react';
+import { ZoomayakQR } from './ZoomayakQR';
 import { 
   X, 
   ShieldCheck, 
@@ -210,12 +210,9 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
               {/* Real QR Code Badge */}
               <div className="md:col-span-3 flex flex-col items-center justify-center p-4 rounded-2xl bg-white text-slate-950 shadow-xl text-center">
                 <div className="relative p-2 border-2 border-slate-900 rounded-xl mb-2">
-                  <QRCodeCanvas
+                  <ZoomayakQR
                     value={`${window.location.origin}/qr/${encodeURIComponent(pet.zmId)}`}
                     size={96}
-                    level="H"
-                    includeMargin
-                    imageSettings={{ src: '/zoomayak-logo-approved-icon.png', height: 22, width: 22, excavate: true }}
                   />
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-800">Сканировать QR</span>
