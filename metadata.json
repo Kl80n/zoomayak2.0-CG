@@ -1,6 +1,11 @@
 {
-  "name": "ЗооМаяк v7.1",
-  "version": "7.1.0",
-  "release": "approved-logo-clean-home",
-  "notes": "Root-ready Vite release. Approved master logo, deduplicated home, account, marketplace and QR logo."
+  "name": "ЗооМаяк — Цифровой профиль питомца",
+  "version": "8.10.0",
+  "release": "single-root-consolidation",
+  "description": "Современный сервис для заботы о питомцах: цифровой ветпаспорт с QR-кодом, напоминания о прививках, маркетплейс с интерактивным парсером объявлений с Авито и проверенные услуги.",
+  "notes": "Root-ready Vite release. Approved master logo, deduplicated home, account, marketplace and QR logo.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
