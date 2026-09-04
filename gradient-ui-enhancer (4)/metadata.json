@@ -1,0 +1,6 @@
+{
+  "name": "ЗооМаяк — Цифровой профиль питомца",
+  "description": "Современный сервис для заботы о питомцах: цифровой ветпаспорт с QR-кодом, напоминания о прививках, поиск потеряшек и проверенные услуги.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
