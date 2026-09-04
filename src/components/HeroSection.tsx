@@ -7,7 +7,6 @@ interface HeroSectionProps {
   onOpenCabinet: () => void;
   onOpenCollarStudio: () => void;
   onOpenSOS: () => void;
-  onOpenListings: () => void;
 }
 
 const TAGS = [
@@ -16,7 +15,7 @@ const TAGS = [
   { id: 'shield', title: 'Щит', size: '28×34 мм', note: 'Надёжный', shape: 'shield' as const },
 ];
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCabinet, onOpenCollarStudio, onOpenSOS, onOpenListings }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCabinet, onOpenCollarStudio, onOpenSOS }) => {
   const sampleQr = typeof window !== 'undefined' ? `${window.location.origin}/qr/ZM-7X3B-9K2D` : 'https://zoomayak.ru/qr/ZM-7X3B-9K2D';
 
   return (
@@ -60,7 +59,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCabinet, onOpenC
 
       <div className="home-lower-grid">
         <div className="panel-card home-spec-card">
-          <div className="panel-heading"><div><span className="eyebrow compact"><Sparkles className="w-3.5 h-3.5" /> ЖЕТОН</span><h3>Сталь, гравировка, влага</h3></div><button onClick={onOpenListings} className="panel-link">Объявления →</button></div>
+          <div className="panel-heading"><div><span className="eyebrow compact"><Sparkles className="w-3.5 h-3.5" /> ЖЕТОН</span><h3>Сталь, гравировка, влага</h3></div><button onClick={onOpenCollarStudio} className="panel-link">Собрать адресник →</button></div>
           <div className="home-spec-row"><span><ShieldCheck /> Нержавеющая сталь</span><span><Sparkles /> Вечная гравировка</span><span><Droplets /> Влагозащита</span><span>1.5 мм</span></div>
         </div>
         <div className="sos-preview panel-card">
