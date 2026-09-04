@@ -15,6 +15,8 @@ import {
 import { Pet, MedicalRecord, ReminderItem, LostAlert, ActiveNavTab, AnimalListing, OwnerProfile, DEFAULT_OWNER, SightingReport } from './types';
 import { Header, type ThemeMode } from './components/Header';
 import { HeroSection } from './components/HeroSection';
+import { HomeMarketplacePreview } from './components/HomeMarketplacePreview';
+import { PetNews } from './components/PetNews';
 import { MyPetsTab } from './components/MyPetsTab';
 import { RemindersTab } from './components/RemindersTab';
 import { HealthVaultTab } from './components/HealthVaultTab';
@@ -150,8 +152,9 @@ export default function App() {
               onOpenCabinet={() => setActiveTab('pets')}
               onOpenCollarStudio={() => setIsCollarStudioOpen(true)}
               onOpenSOS={() => setActiveTab('lost')}
-              onOpenListings={() => setActiveTab('services')}
             />
+            <HomeMarketplacePreview onOpenMarketplace={() => setActiveTab('services')} />
+            <PetNews />
 
           </div>
         )}

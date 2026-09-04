@@ -362,7 +362,7 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
 
 .zoomayak-qr { display: inline-flex; background: #fff; border-radius: 8px; overflow: hidden; }
 .zoomayak-qr canvas { display: block; }
-.tag-shape-paw { border-radius: 42% 42% 38% 38% / 38% 38% 48% 48%; }
+.tag-shape-paw { overflow: hidden; clip-path: polygon(50% 8%, 72% 18%, 88% 38%, 84% 62%, 68% 88%, 50% 98%, 32% 88%, 16% 62%, 12% 38%, 28% 18%); border-radius: 0; }
 
 .hero-product-card { padding: 18px 18px 16px; border: 1px solid color-mix(in srgb, var(--green) 20%, var(--line)); border-radius: 24px; background: var(--surface); }
 .hero-product-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -396,4 +396,57 @@ html.theme-light .account-modal, html.theme-light .publish-modal { background: v
 @media (max-width: 760px) {
   .tag-proto-row { grid-template-columns: 1fr; }
   .hero-product-card { padding: 14px; }
+}
+
+/* Homepage marketplace + pet news (must stay on home, not in cabinet) */
+.home-market-preview,.pet-news-section{max-width:1400px;margin:0 auto;padding:8px 16px 0}.home-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:16px}.home-section-head h2{margin:6px 0 5px;font-size:28px;font-weight:950;color:var(--text)}.home-section-head p{margin:0;color:var(--muted);font-size:12px;max-width:720px;line-height:1.55}.ghost-link{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:850;white-space:nowrap}.ghost-link svg{width:15px}.home-listing-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.home-listing-card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--surface);min-width:0}.home-listing-image{height:150px;position:relative}.home-listing-image img{width:100%;height:100%;object-fit:cover;display:block}.home-listing-body{padding:12px}.home-listing-title{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.home-listing-title h3{margin:0;font-size:14px;font-weight:900;color:var(--text)}.home-listing-title strong{color:var(--green);font-size:12px;white-space:nowrap}.home-listing-body>p{margin:5px 0 9px;color:var(--muted);font-size:10px}.home-listing-meta{display:flex;justify-content:space-between;gap:6px;color:var(--muted);font-size:9px}.home-listing-meta span{display:inline-flex;align-items:center;gap:4px}.home-listing-meta svg{width:12px}.verified-inline{color:var(--green)!important}.home-market-note{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(90deg,rgba(0,190,145,.08),transparent);color:var(--muted);font-size:10px}.home-market-note>svg{color:var(--green);width:17px;flex:none}.home-market-note span{flex:1}.home-market-note button{display:inline-flex;align-items:center;gap:5px;background:none;border:0;color:var(--green);font-weight:900;white-space:nowrap}.home-market-note button svg{width:13px}.pet-news-section{padding-top:34px;padding-bottom:36px}.pet-news-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.pet-news-card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--surface)}.pet-news-card>img{width:100%;height:170px;object-fit:cover;display:block}.pet-news-body{padding:14px}.pet-news-meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:9px}.pet-news-meta span{color:var(--green);font-weight:900}.pet-news-meta time{display:inline-flex;align-items:center;gap:4px}.pet-news-meta svg{width:11px}.pet-news-body h3{margin:9px 0 6px;font-size:15px;line-height:1.25;color:var(--text)}.pet-news-body p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}.pet-news-body button{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:0;border:0;background:none;color:var(--green);font-size:10px;font-weight:900}.pet-news-body button svg{width:13px}.market-toolbar{grid-template-columns:minmax(220px,1.5fr) auto minmax(180px,.8fr) auto!important}.market-filter{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:0 11px;color:var(--muted);min-height:42px}.market-filter svg{width:15px;color:var(--green)}.market-filter select{border:0;background:transparent;color:var(--text);outline:0;font-weight:800;font-size:11px;padding:0 4px}.market-filter option{background:#101827;color:#fff}
+
+.home-carousel { position: relative; overflow: hidden; }
+.home-carousel-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.carousel-arrow {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: inline-grid; place-items: center; flex: 0 0 auto;
+  color: var(--text); background: var(--surface-2);
+  border: 1px solid var(--line); cursor: pointer; transition: .2s ease;
+}
+.carousel-arrow svg { width: 16px; height: 16px; }
+.carousel-arrow:hover { color: var(--green); border-color: color-mix(in srgb, var(--green) 45%, var(--line)); background: var(--green-soft); transform: translateY(-1px); }
+.home-listing-carousel,
+.pet-news-carousel {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 2px 2px 10px;
+  gap: 14px;
+}
+.home-listing-carousel::-webkit-scrollbar,
+.pet-news-carousel::-webkit-scrollbar { display: none; }
+.home-listing-carousel .home-listing-card {
+  flex: 0 0 calc((100% - 42px) / 4);
+  min-width: 250px;
+  scroll-snap-align: start;
+}
+.pet-news-carousel .pet-news-card {
+  flex: 0 0 calc((100% - 42px) / 4);
+  min-width: 250px;
+  scroll-snap-align: start;
+}
+.home-listing-card,
+.pet-news-card { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.home-listing-card:hover,
+.pet-news-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--green) 42%, var(--line)); box-shadow: 0 16px 34px rgba(0,0,0,.12); }
+
+@media (max-width:1100px){.home-listing-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.pet-news-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.market-toolbar{grid-template-columns:1fr 1fr!important}.market-sync{grid-column:1/-1}
+  .home-listing-carousel .home-listing-card,
+  .pet-news-carousel .pet-news-card { flex-basis: calc((100% - 28px) / 3); }
+}
+@media (max-width:700px){.home-market-preview,.pet-news-section{padding-left:12px;padding-right:12px}.home-section-head{align-items:flex-start;flex-direction:column}.home-section-head h2{font-size:23px}.home-listing-grid,.pet-news-grid{grid-template-columns:1fr}.home-market-note{align-items:flex-start;flex-wrap:wrap}.home-market-note button{margin-left:27px}.market-toolbar{grid-template-columns:1fr!important}.market-filter,.market-sync{width:100%}}
+@media (max-width: 760px) {
+  .home-carousel-actions { width: 100%; justify-content: flex-start; }
+  .home-listing-carousel .home-listing-card,
+  .pet-news-carousel .pet-news-card { flex-basis: 82%; min-width: 0; }
+  .carousel-arrow { width: 36px; height: 36px; }
 }
