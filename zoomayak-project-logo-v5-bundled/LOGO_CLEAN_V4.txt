@@ -1,4 +1,0 @@
-Logo clean v4
-Главный интерфейс: /logo/zoomayak-master.png
-QR: /logo/zoomayak-qr-mark.png
-Старые варианты логотипа удалены из логики компонентов ZoomayakLogo/ZoomayakQR.
