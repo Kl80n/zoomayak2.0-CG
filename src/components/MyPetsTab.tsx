@@ -14,7 +14,7 @@ import {
   ChevronRight,
   AlertCircle
 } from 'lucide-react';
-import { Pet } from '../types';
+import { Pet, SPECIES_EMOJI, SPECIES_LABELS } from '../types';
 
 interface MyPetsTabProps {
   pets: Pet[];
@@ -95,7 +95,7 @@ export const MyPetsTab: React.FC<MyPetsTabProps> = ({
                     {pet.zmId}
                   </span>
                   <div className="text-[10px] text-slate-400 mt-1">
-                    {pet.species === 'dog' ? '🐶 Собака' : '🐱 Кошка'}
+                    {SPECIES_EMOJI[pet.species]} {SPECIES_LABELS[pet.species]}
                   </div>
                 </div>
               </div>
@@ -139,7 +139,7 @@ export const MyPetsTab: React.FC<MyPetsTabProps> = ({
                   {selectedPet.name}
                 </h3>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                  {selectedPet.species === 'dog' ? 'Собака' : 'Кошка'}
+                  {SPECIES_LABELS[selectedPet.species]}
                 </span>
               </div>
               <p className="text-sm font-semibold text-slate-300 mt-1">

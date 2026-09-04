@@ -15,7 +15,7 @@ import {
   FileDown
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { LostAlert, Pet, SightingReport } from '../types';
+import { LostAlert, Pet, SightingReport, SPECIES_LABELS, SPECIES_LOST_HEADLINE } from '../types';
 
 interface LostPetSOSTabProps {
   lostAlerts: LostAlert[];
@@ -191,7 +191,7 @@ export const LostPetSOSTab: React.FC<LostPetSOSTabProps> = ({
                     {alert.petName}
                   </h4>
                   <span className="text-xs font-bold text-slate-400">
-                    {alert.species === 'dog' ? 'Собака' : 'Кошка'}
+                    {SPECIES_LABELS[alert.species]}
                   </span>
                 </div>
                 
@@ -249,7 +249,7 @@ export const LostPetSOSTab: React.FC<LostPetSOSTabProps> = ({
             {/* Poster Header */}
             <div className="text-center pb-4 border-b-4 border-rose-600 mb-4">
               <div className="text-3xl sm:text-4xl font-black text-rose-600 uppercase tracking-tight">
-                ПРОПАЛА {selectedAlertForPoster.species === 'dog' ? 'СОБАКА' : 'КОШКА'}!
+                {SPECIES_LOST_HEADLINE[selectedAlertForPoster.species]}!
               </div>
               <div className="text-sm font-bold text-slate-800 uppercase tracking-wider mt-1">
                 ПОЖАЛУЙСТА, ПОМОГИТЕ НАЙТИ ЧЛЕНА СЕМЬИ!

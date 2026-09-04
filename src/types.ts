@@ -1,4 +1,43 @@
-export type PetSpecies = 'dog' | 'cat' | 'other';
+export type PetSpecies = 'dog' | 'cat' | 'bird' | 'rodent' | 'reptile' | 'other';
+
+export const SPECIES_LIST: PetSpecies[] = ['dog', 'cat', 'bird', 'rodent', 'reptile', 'other'];
+
+export const SPECIES_EMOJI: Record<PetSpecies, string> = {
+  dog: '🐶',
+  cat: '🐱',
+  bird: '🦜',
+  rodent: '🐹',
+  reptile: '🦎',
+  other: '🐾',
+};
+
+export const SPECIES_LABELS: Record<PetSpecies, string> = {
+  dog: 'Собака',
+  cat: 'Кошка',
+  bird: 'Птица',
+  rodent: 'Грызун',
+  reptile: 'Рептилия',
+  other: 'Другое',
+};
+
+export const SPECIES_LABELS_PLURAL: Record<PetSpecies, string> = {
+  dog: 'Собаки',
+  cat: 'Кошки',
+  bird: 'Птицы',
+  rodent: 'Грызуны',
+  reptile: 'Рептилии',
+  other: 'Другие',
+};
+
+/** Заголовок SOS-плаката: род существительного меняет форму глагола. */
+export const SPECIES_LOST_HEADLINE: Record<PetSpecies, string> = {
+  dog: 'ПРОПАЛА СОБАКА',
+  cat: 'ПРОПАЛА КОШКА',
+  bird: 'ПРОПАЛА ПТИЦА',
+  rodent: 'ПРОПАЛ ГРЫЗУН',
+  reptile: 'ПРОПАЛА РЕПТИЛИЯ',
+  other: 'ПРОПАЛ ПИТОМЕЦ',
+};
 
 export interface WeightRecord {
   date: string;

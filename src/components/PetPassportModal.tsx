@@ -19,7 +19,7 @@ import {
   FileCheck
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { Pet, MedicalRecord } from '../types';
+import { Pet, MedicalRecord, SPECIES_LABELS } from '../types';
 
 interface PetPassportModalProps {
   isOpen: boolean;
@@ -174,7 +174,7 @@ export const PetPassportModal: React.FC<PetPassportModalProps> = ({
                   <h2 className="text-3xl font-black text-white font-display flex items-center gap-2">
                     <span>{pet.name}</span>
                     <span className="text-xs font-bold px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                      {pet.species === 'dog' ? 'Собака' : pet.species === 'cat' ? 'Кошка' : 'Питомец'}
+                      {SPECIES_LABELS[pet.species]}
                     </span>
                   </h2>
                   <p className="text-sm font-semibold text-slate-300 mt-0.5">

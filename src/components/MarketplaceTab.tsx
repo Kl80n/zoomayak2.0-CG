@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Search, Star, MapPin, Phone, Clock, ShieldCheck, ShoppingBag, PawPrint, Plus, ExternalLink, RefreshCw, SlidersHorizontal, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { AnimalListing, ServiceListing } from '../types';
+import { AnimalListing, ServiceListing, SPECIES_EMOJI, SPECIES_LABELS, SPECIES_LABELS_PLURAL, SPECIES_LIST } from '../types';
 
 interface MarketplaceTabProps {
   services: ServiceListing[];
@@ -66,7 +66,7 @@ export const MarketplaceTab: React.FC<MarketplaceTabProps> = ({ services, catalo
       <div className="market-toolbar">
         <div className="market-search"><Search /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Порода, вид, город или ключевое слово" /></div>
         <div className="market-sources"><button className={source === 'all' ? 'is-active' : ''} onClick={() => setSource('all')}>Все источники</button>{(['Avito','VK','Telegram','ЗооМаяк'] as const).map(s => <button key={s} className={source === s ? 'is-active' : ''} onClick={() => setSource(s)}>{s}</button>)}</div>
-        <div className="market-sources"><button className={species === 'all' ? 'is-active' : ''} onClick={() => setSpecies('all')}>Все виды</button><button className={species === 'dog' ? 'is-active' : ''} onClick={() => setSpecies('dog')}>Собаки</button><button className={species === 'cat' ? 'is-active' : ''} onClick={() => setSpecies('cat')}>Кошки</button></div>
+        <div className="market-sources"><button className={species === 'all' ? 'is-active' : ''} onClick={() => setSpecies('all')}>Все виды</button>{SPECIES_LIST.map(s => <button key={s} className={species === s ? 'is-active' : ''} onClick={() => setSpecies(s)}>{SPECIES_LABELS_PLURAL[s]}</button>)}</div>
         <button className="market-sync" onClick={syncSources}><RefreshCw className={syncing ? 'spin' : ''} /> {syncing ? 'Обновляем…' : 'Обновить ленту'}</button>
       </div>
 
@@ -92,7 +92,7 @@ const ServicesGrid: React.FC<{ services: ServiceListing[] }> = ({ services }) =>
 const PublishModal: React.FC<{ onClose: () => void; onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }> = ({ onClose, onSubmit }) => <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl" onMouseDown={onClose}>
   <form className="publish-modal" onSubmit={onSubmit} onMouseDown={e => e.stopPropagation()}>
     <div className="publish-head"><div><span className="eyebrow compact">НОВОЕ ОБЪЯВЛЕНИЕ</span><h2>Продажа животного</h2></div><button type="button" className="icon-action" onClick={onClose}><X /></button></div>
-    <div className="publish-grid"><label>Заголовок<input name="title" required placeholder="Например, щенки корги" /></label><label>Вид<select name="species"><option value="dog">Собака</option><option value="cat">Кошка</option><option value="other">Другое</option></select></label><label>Порода<input name="breed" placeholder="Порода" /></label><label>Возраст<input name="age" placeholder="3 месяца" /></label><label>Пол<select name="sex"><option value="female">Девочка</option><option value="male">Мальчик</option></select></label><label>Цена, ₽<input name="price" type="number" min="0" placeholder="30000" /></label><label>Город<input name="city" defaultValue="Ярославль" /></label><label className="publish-wide">Описание<textarea name="description" rows={4} placeholder="Расскажите о животном, документах и состоянии" /></label></div>
+    <div className="publish-grid"><label>Заголовок<input name="title" required placeholder="Например, щенки корги" /></label><label>Вид<select name="species">{SPECIES_LIST.map(s => <option key={s} value={s}>{SPECIES_EMOJI[s]} {SPECIES_LABELS[s]}</option>)}</select></label><label>Порода<input name="breed" placeholder="Порода" /></label><label>Возраст<input name="age" placeholder="3 месяца" /></label><label>Пол<select name="sex"><option value="female">Девочка</option><option value="male">Мальчик</option></select></label><label>Цена, ₽<input name="price" type="number" min="0" placeholder="30000" /></label><label>Город<input name="city" defaultValue="Ярославль" /></label><label className="publish-wide">Описание<textarea name="description" rows={4} placeholder="Расскажите о животном, документах и состоянии" /></label></div>
     <div className="publish-foot"><span>После публикации источник будет отмечен как «ЗооМаяк».</span><button className="primary-cta" type="submit"><Plus /> Опубликовать</button></div>
   </form>
 </div>;

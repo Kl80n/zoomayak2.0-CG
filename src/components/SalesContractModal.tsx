@@ -16,7 +16,7 @@ import {
   FileCheck2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { AnimalListing } from '../types';
+import { AnimalListing, SPECIES_LABELS } from '../types';
 import { ZoomayakQR } from './ZoomayakQR';
 
 interface SalesContractModalProps {
@@ -58,7 +58,7 @@ export const SalesContractModal: React.FC<SalesContractModalProps> = ({
   const [buyerAddress, setBuyerAddress] = useState('г. Ярославль, Кировский район, ул. Победы, д. 15');
 
   // Pet details
-  const [petSpecies, setPetSpecies] = useState(listing?.species === 'cat' ? 'Кошка' : 'Собака');
+  const [petSpecies, setPetSpecies] = useState(SPECIES_LABELS[listing?.species ?? 'dog']);
   const [petBreed, setPetBreed] = useState(listing?.breed || 'Французский бульдог');
   const [petName, setPetName] = useState(listing?.title || 'Арчи');
   const [petGender, setPetGender] = useState(listing?.sex === 'female' ? 'Женский (Сука/Кошка)' : 'Мужской (Кобель/Кот)');

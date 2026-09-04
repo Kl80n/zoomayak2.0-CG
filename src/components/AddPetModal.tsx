@@ -9,7 +9,7 @@ import {
   Camera
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { OwnerProfile, Pet, PetSpecies } from '../types';
+import { OwnerProfile, Pet, PetSpecies, SPECIES_EMOJI, SPECIES_LABELS, SPECIES_LIST } from '../types';
 
 interface AddPetModalProps {
   isOpen: boolean;
@@ -143,29 +143,21 @@ export const AddPetModal: React.FC<AddPetModalProps> = ({
               <label className="text-xs font-bold text-slate-300 block mb-1">
                 Вид питомца
               </label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSpecies('dog')}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold border transition cursor-pointer ${
-                    species === 'dog'
-                      ? 'bg-teal-500/20 border-teal-400 text-teal-300'
-                      : 'bg-slate-950 border-slate-800 text-slate-400'
-                  }`}
-                >
-                  🐶 Собака
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSpecies('cat')}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold border transition cursor-pointer ${
-                    species === 'cat'
-                      ? 'bg-teal-500/20 border-teal-400 text-teal-300'
-                      : 'bg-slate-950 border-slate-800 text-slate-400'
-                  }`}
-                >
-                  🐱 Кошка
-                </button>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {SPECIES_LIST.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setSpecies(option)}
+                    className={`py-2 px-3 rounded-xl text-xs font-bold border transition cursor-pointer ${
+                      species === option
+                        ? 'bg-teal-500/20 border-teal-400 text-teal-300'
+                        : 'bg-slate-950 border-slate-800 text-slate-400'
+                    }`}
+                  >
+                    {SPECIES_EMOJI[option]} {SPECIES_LABELS[option]}
+                  </button>
+                ))}
               </div>
             </div>
 
