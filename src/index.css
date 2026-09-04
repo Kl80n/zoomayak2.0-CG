@@ -24,6 +24,7 @@
   --zm-fill: #022c22;
   --zm-accent: #2dd4bf;
   --zm-paw: #5eead4;
+  --zm-heart: #fb7185;
   --zm-beam: #fde68a;
   --zm-word: #f8fafc;
   --zm-word-accent: #2dd4bf;
@@ -51,6 +52,7 @@
   --zm-fill: #0f172a;
   --zm-accent: #0d9488;
   --zm-paw: #14b8a6;
+  --zm-heart: #e11d48;
   --zm-beam: #f59e0b;
   --zm-word: #0b1720;
   --zm-word-accent: #0d9488;
@@ -1121,13 +1123,9 @@ body.dark .zoomayak-logo-compact .zoomayak-logo-dark,
   display: block;
   overflow: visible;
 }
-.theme-dark .zm-paw,
-:root[data-theme='dark'] .zm-paw {
-  filter: drop-shadow(0 0 5px var(--zm-paw));
-}
-.theme-dark .zm-beams,
-:root[data-theme='dark'] .zm-beams {
-  filter: drop-shadow(0 0 3px var(--zm-beam));
+.theme-dark .zm-heart,
+:root[data-theme='dark'] .zm-heart {
+  filter: drop-shadow(0 0 6px var(--zm-heart));
 }
 .zm-logo-text {
   display: flex;
