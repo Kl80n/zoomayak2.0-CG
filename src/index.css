@@ -21,6 +21,14 @@
   --green-2: #14d695;
   --green-soft: rgba(0, 184, 135, .12);
   --hero: linear-gradient(135deg, #0b1424 0%, #070e1a 100%);
+  --zm-fill: #022c22;
+  --zm-accent: #2dd4bf;
+  --zm-paw: #5eead4;
+  --zm-heart: #fb7185;
+  --zm-beam: #fde68a;
+  --zm-word: #f8fafc;
+  --zm-word-accent: #2dd4bf;
+  --zm-slogan: #94a3b8;
 }
 
 :root[data-theme='light'],
@@ -41,6 +49,14 @@
   --green-2: #08b978;
   --green-soft: rgba(0, 155, 105, .08);
   --hero: linear-gradient(135deg, #effaf5 0%, #e9f7f1 52%, #f7fbf9 100%);
+  --zm-fill: #0f172a;
+  --zm-accent: #0d9488;
+  --zm-paw: #14b8a6;
+  --zm-heart: #e11d48;
+  --zm-beam: #f59e0b;
+  --zm-word: #0b1720;
+  --zm-word-accent: #0d9488;
+  --zm-slogan: #64748b;
 }
 
 @layer base {
@@ -1087,4 +1103,85 @@ body.dark .zoomayak-logo-compact .zoomayak-logo-dark,
   height: 28px;
   background: linear-gradient(to top, rgba(45, 212, 191, 0.35), transparent);
   pointer-events: none;
+}
+
+/* Brand lockup — dog / paw-lamp lighthouse / cat */
+.zm-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.zm-logo-mark {
+  width: 64px;
+  height: 48px;
+  flex: 0 0 64px;
+  display: block;
+  overflow: visible;
+}
+.theme-dark .zm-heart,
+:root[data-theme='dark'] .zm-heart {
+  filter: drop-shadow(0 0 6px var(--zm-heart));
+}
+.theme-dark .zm-lamp,
+:root[data-theme='dark'] .zm-lamp,
+.theme-dark .zm-beams,
+:root[data-theme='dark'] .zm-beams {
+  filter: drop-shadow(0 0 4px var(--zm-beam));
+}
+.zm-logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  line-height: 1.05;
+}
+.zm-logo-word {
+  font-family: 'Unbounded', 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  color: var(--zm-word);
+  white-space: nowrap;
+}
+.zm-logo-word span {
+  color: var(--zm-word-accent);
+}
+.zm-logo-slogan {
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 650;
+  color: var(--zm-slogan);
+  white-space: nowrap;
+}
+.zm-logo--compact {
+  gap: 0;
+}
+.zm-logo--compact .zm-logo-mark {
+  width: 48px;
+  height: 36px;
+  flex-basis: 48px;
+}
+.brand-block {
+  min-width: 0 !important;
+  gap: 0 !important;
+  background: transparent !important;
+}
+.brand-block .zm-logo {
+  max-width: 100%;
+}
+
+@media (max-width: 1199px) {
+  .zm-logo-mark { width: 56px; height: 42px; flex-basis: 56px; }
+  .zm-logo-word { font-size: 19px; }
+}
+@media (max-width: 640px) {
+  .zm-logo { gap: 8px; }
+  .zm-logo-mark { width: 48px; height: 36px; flex-basis: 48px; }
+  .zm-logo-word { font-size: 16px; }
+  .zm-logo-slogan { display: none; }
 }

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
+import { QR_MARK } from '../brand';
+import { ZoomayakMark } from './ZoomayakMark';
 
 interface ZoomayakQRProps {
   value: string;
@@ -20,9 +22,6 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
   lightBackground = true,
   badgeShape = 'rounded',
 }) => {
-  const [imgError, setImgError] = useState(false);
-
-  // Optimal logo size for Level H (~24-26% of QR size ensures 100% scan reliability)
   const computedLogoSize = logoSize || Math.max(26, Math.round(size * 0.25));
   const badgeOuterSize = computedLogoSize + 8;
 
@@ -36,7 +35,6 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
         height: showBorder ? `${size + 20}px` : `${size}px`,
       }}
     >
-      {/* High error-correction QR code canvas with standard quiet-zone margin and embedded logo */}
       <QRCodeCanvas
         value={value}
         size={size}
@@ -46,14 +44,13 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
         bgColor="#ffffff"
         fgColor="#0a0f1d"
         imageSettings={{
-          src: '/zoomayak-qr-mark.svg',
+          src: QR_MARK,
           height: computedLogoSize,
           width: computedLogoSize,
           excavate: true,
         }}
       />
 
-      {/* Centered official Zoomayak Brand Emblem Plate overlay for crisp display */}
       <div
         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.25)] border border-teal-600/40 overflow-hidden pointer-events-none z-10 ${
           badgeShape === 'circle' ? 'rounded-full' : 'rounded-lg'
@@ -61,25 +58,14 @@ export const ZoomayakQR: React.FC<ZoomayakQRProps> = ({
         style={{
           width: `${badgeOuterSize}px`,
           height: `${badgeOuterSize}px`,
+          // Force the light-theme mark colors inside the white QR plate.
+          ['--zm-fill' as string]: '#0f172a',
+          ['--zm-accent' as string]: '#0d9488',
+          ['--zm-paw' as string]: '#14b8a6',
+          ['--zm-beam' as string]: '#f59e0b',
         }}
       >
-        {!imgError ? (
-          <img
-            src="/logo/zoomayak-master.png"
-            alt="ЗооМаяк"
-            className="w-full h-full object-contain p-0.5"
-            loading="eager"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          /* High-contrast vector Lighthouse fallback */
-          <svg viewBox="0 0 36 36" className="w-full h-full p-0.5 text-teal-600" fill="currentColor">
-            <path d="M15 8h6l2 16H13l2-16Z" fill="#0d9488" />
-            <path d="M12 24h12v4H12z" fill="#0f766e" />
-            <circle cx="18" cy="6" r="3" fill="#14b8a6" />
-            <path d="M7 6l5 2M29 6l-5 2" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        )}
+        <ZoomayakMark className="w-full h-full p-[6%]" />
       </div>
     </div>
   );

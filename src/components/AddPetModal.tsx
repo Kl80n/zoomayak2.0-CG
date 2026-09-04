@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Pet, PetSpecies } from '../types';
-import { ZoomayakLogo } from './ZoomayakLogo';
 import { ZoomayakQR } from './ZoomayakQR';
 
 interface AddPetModalProps {

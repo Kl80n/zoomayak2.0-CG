@@ -23,6 +23,7 @@ import {
 import confetti from 'canvas-confetti';
 import { Pet } from '../types';
 import { RealisticMetalTag, TagShape, TagMaterial } from './RealisticMetalTag';
+import { ZoomayakLogo } from './ZoomayakLogo';
 import { RealTagMockup } from './RealTagMockup';
 
 interface CollarTagStudioModalProps {
@@ -352,11 +353,11 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
                   <div className="flex items-start gap-3">
                     <div className="relative">
                       <img
-                        src={pet.photo || '/logo/zoomayak-master.png'}
+                        src={pet.photo || '/emblem.svg'}
                         alt={petName}
                         className="w-13 h-13 rounded-full object-cover border-2 border-white dark:border-slate-800 shadow-sm"
                         onError={(e) => {
-                          e.currentTarget.src = '/logo/zoomayak-master.png';
+                          e.currentTarget.src = '/emblem.svg';
                         }}
                       />
                       <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" />
@@ -408,11 +409,7 @@ export const CollarTagStudioModal: React.FC<CollarTagStudioModalProps> = ({
                 {/* Brand Header */}
                 <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
                   <div className="flex items-center gap-3">
-                    <img
-                      src="/logo/zoomayak-master.png"
-                      alt="ЗооМаяк"
-                      className="w-14 h-14 object-contain"
-                    />
+                    <ZoomayakLogo compact />
                     <div>
                       <div className="flex items-center gap-1.5 text-lg font-black text-slate-900 dark:text-white">
                         <span>Зоо</span><span className="text-teal-600 dark:text-teal-400">Маяк</span>
