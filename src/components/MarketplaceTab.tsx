@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Search, Star, MapPin, Phone, Clock, ShieldCheck, ShoppingBag, PawPrint, Plus, ExternalLink, RefreshCw, SlidersHorizontal, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { AnimalListing, ServiceListing, SPECIES_EMOJI, SPECIES_LABELS, SPECIES_LABELS_PLURAL, SPECIES_LIST } from '../types';
+import { getAutoParsedAvitoListings, syncAvitoFeedInBackground } from '../services/avitoParser';
 
 interface MarketplaceTabProps {
   services: ServiceListing[];
@@ -18,9 +19,10 @@ export const MarketplaceTab: React.FC<MarketplaceTabProps> = ({ services, catalo
   const [species, setSpecies] = useState<'all' | AnimalListing['species']>('all');
   const [showPublish, setShowPublish] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [avitoListings, setAvitoListings] = useState<AnimalListing[]>(getAutoParsedAvitoListings);
 
   const listings = useMemo(() => {
-    const pool = mode === 'mine' ? published : [...published, ...catalog];
+    const pool = mode === 'mine' ? published : [...published, ...avitoListings, ...catalog];
     return pool.filter((item) => {
     const q = query.trim().toLowerCase();
     const matchesQuery = !q || [item.title, item.breed, item.city, item.description].some(v => v.toLowerCase().includes(q));
@@ -28,11 +30,13 @@ export const MarketplaceTab: React.FC<MarketplaceTabProps> = ({ services, catalo
     const matchesSpecies = species === 'all' || item.species === species;
     return matchesQuery && matchesSource && matchesSpecies;
   });
-  }, [query, source, species, published, catalog, mode]);
+  }, [query, source, species, published, avitoListings, catalog, mode]);
 
-  const syncSources = () => {
+  const syncSources = async () => {
     setSyncing(true);
-    window.setTimeout(() => setSyncing(false), 1100);
+    const result = await syncAvitoFeedInBackground();
+    setAvitoListings(result.listings);
+    setSyncing(false);
   };
 
   const publish = (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +61,7 @@ export const MarketplaceTab: React.FC<MarketplaceTabProps> = ({ services, catalo
     </div>
 
     <div className="market-tabs">
-      <button className={mode === 'animals' ? 'is-active' : ''} onClick={() => setMode('animals')}><PawPrint /> Продажа животных <span>{catalog.length + published.length}</span></button>
+      <button className={mode === 'animals' ? 'is-active' : ''} onClick={() => setMode('animals')}><PawPrint /> Продажа животных <span>{avitoListings.length + catalog.length + published.length}</span></button>
       <button className={mode === 'services' ? 'is-active' : ''} onClick={() => setMode('services')}><ShoppingBag /> Услуги <span>{services.length}</span></button>
       <button className={mode === 'mine' ? 'is-active' : ''} onClick={() => setMode('mine')}><ShieldCheck /> Мои объявления <span>{published.length}</span></button>
     </div>
