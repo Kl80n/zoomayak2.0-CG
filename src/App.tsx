@@ -163,6 +163,13 @@ export default function App() {
     return <PublicPetProfile pet={publicPet} />;
   }
 
+  const shortPublicMatch = window.location.pathname.match(/^\/(ZM-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*)$/i);
+  if (shortPublicMatch) {
+    const publicId = decodeURIComponent(shortPublicMatch[1]).toLowerCase();
+    const publicPet = INITIAL_PETS.find(p => p.zmId.toLowerCase() === publicId);
+    return <PublicPetProfile pet={publicPet} />;
+  }
+
   const [pets, setPets] = usePersistentState<Pet[]>('pets', INITIAL_PETS);
   const [medicalRecords, setMedicalRecords] = usePersistentState<MedicalRecord[]>('medical-records', INITIAL_RECORDS);
   const [reminders, setReminders] = usePersistentState<ReminderItem[]>('reminders', INITIAL_REMINDERS);

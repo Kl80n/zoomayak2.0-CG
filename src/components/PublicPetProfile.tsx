@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, ShieldCheck, QrCode } from 'lucide-react';
+import { QRCodeCanvas } from 'qrcode.react';
 import { Pet } from '../types';
 
 export const PublicPetProfile: React.FC<{ pet: Pet | undefined }> = ({ pet }) => {
@@ -16,6 +17,14 @@ export const PublicPetProfile: React.FC<{ pet: Pet | undefined }> = ({ pet }) =>
   }
 
   const contact = pet.emergencyContacts?.[0];
+  const qrSize = 250;
+  const emblemMax = Math.round(qrSize * 0.25);
+  const emblemWidth = emblemMax;
+  const emblemHeight = Math.round((emblemMax * 467) / 540);
+  const excavateSize = emblemMax + 8;
+  const circleSize = Math.ceil(qrSize * Math.SQRT2) + 48;
+  const qrValue = `${window.location.origin}/${encodeURIComponent(pet.zmId)}`;
+  const approvedMarkSrc = '/logo/zoomayak-qr-mark.png';
 
   return (
     <div className="min-h-screen bg-[#f6faf8] dark:bg-[#070b14] text-slate-900 dark:text-white p-4 sm:p-8 transition-colors duration-200">
@@ -58,6 +67,42 @@ export const PublicPetProfile: React.FC<{ pet: Pet | undefined }> = ({ pet }) =>
                 <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Чип (ISO)</div>
                 <div className="font-mono font-bold mt-1 text-sm text-slate-800 dark:text-slate-200">
                   {pet.microchipId || 'не указан'}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <div
+                className="rounded-full bg-white flex items-center justify-center"
+                style={{ width: circleSize, height: circleSize }}
+              >
+                <div className="relative" style={{ width: qrSize, height: qrSize }}>
+                  <QRCodeCanvas
+                    value={qrValue}
+                    size={qrSize}
+                    level="H"
+                    includeMargin={true}
+                    marginSize={4}
+                    bgColor="#ffffff"
+                    fgColor="#000000"
+                    imageSettings={{
+                      src: approvedMarkSrc,
+                      height: excavateSize,
+                      width: excavateSize,
+                      excavate: true,
+                    }}
+                  />
+                  <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white flex items-center justify-center pointer-events-none"
+                    style={{ width: excavateSize, height: excavateSize }}
+                  >
+                    <img
+                      src={approvedMarkSrc}
+                      alt=""
+                      className="object-contain"
+                      style={{ width: emblemWidth, height: emblemHeight }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
