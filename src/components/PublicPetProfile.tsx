@@ -1,7 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, ShieldCheck, QrCode } from 'lucide-react';
 import { Pet } from '../types';
-import { ZoomayakLogo } from './ZoomayakLogo';
 
 export const PublicPetProfile: React.FC<{ pet: Pet | undefined }> = ({ pet }) => {
   if (!pet) {
@@ -22,7 +21,11 @@ export const PublicPetProfile: React.FC<{ pet: Pet | undefined }> = ({ pet }) =>
     <div className="min-h-screen bg-[#f6faf8] dark:bg-[#070b14] text-slate-900 dark:text-white p-4 sm:p-8 transition-colors duration-200">
       <div className="max-w-xl mx-auto space-y-4">
         <div className="flex items-center justify-between px-1">
-          <ZoomayakLogo />
+          <img
+            src="/logo/zoomayak-master.png"
+            alt="ЗооМаяк — Ваш ориентир в мире питомцев"
+            className="h-auto w-[182px] max-w-[70%] object-contain object-left bg-transparent"
+          />
           <span className="text-xs font-extrabold text-teal-700 dark:text-teal-400 tracking-wider">
             ПУБЛИЧНАЯ КАРТОЧКА
           </span>
