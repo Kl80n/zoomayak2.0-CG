@@ -20,6 +20,7 @@ import { SOSAlertModal } from './components/SOSAlertModal';
 import { PricingTariffsModal } from './components/PricingTariffsModal';
 import { Footer } from './components/Footer';
 import { PublicPetProfile } from './components/PublicPetProfile';
+import { AddressTagMvp } from './components/AddressTagMvp';
 import { AccountTab } from './components/AccountTab';
 import { HomeMarketplacePreview } from './components/HomeMarketplacePreview';
 import { PetNews } from './components/PetNews';
@@ -168,6 +169,10 @@ export default function App() {
     const publicId = decodeURIComponent(shortPublicMatch[1]).toLowerCase();
     const publicPet = INITIAL_PETS.find(p => p.zmId.toLowerCase() === publicId);
     return <PublicPetProfile pet={publicPet} />;
+  }
+
+  if (window.location.pathname.replace(/\/$/, '') === '/tag') {
+    return <AddressTagMvp pet={INITIAL_PETS[0]} />;
   }
 
   const [pets, setPets] = usePersistentState<Pet[]>('pets', INITIAL_PETS);
