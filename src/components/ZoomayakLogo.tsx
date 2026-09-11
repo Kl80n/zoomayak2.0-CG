@@ -42,12 +42,12 @@ export const ZoomayakLogo: React.FC<ZoomayakLogoProps> = ({
       aria-label="ЗооМаяк — Ваш ориентир в мире питомцев"
     >
       <img
-        src="/zoomayak-logo-approved.png"
+        src="/logo/zoomayak-master.png"
         alt="ЗооМаяк — Ваш ориентир в мире питомцев"
         className="zoomayak-approved-logo-img zoomayak-logo-light bg-transparent mix-blend-multiply dark:mix-blend-normal"
       />
       <img
-        src="/zoomayak-logo-dark-neon-approved.png"
+        src="/logo/zoomayak-master.png"
         alt="ЗооМаяк — Ваш ориентир в мире питомцев"
         className={`zoomayak-approved-logo-img zoomayak-logo-dark bg-transparent${showSlogan ? '' : ' zoomayak-no-slogan'}`}
       />
